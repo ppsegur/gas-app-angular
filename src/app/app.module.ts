@@ -3,23 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-<<<<<<< HEAD
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-=======
+import { ListadoGasolinerasComponent } from './components/listado-gasolineras/listado-gasolineras.component';
+import { provideHttpClient } from '@angular/common/http';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
->>>>>>> ddae1ccca943290c9457a8b61dfb72a6f6e2a84c
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent
+    NavBarComponent,
+    ListadoGasolinerasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule
   ],
-  providers: [],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
