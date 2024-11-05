@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListadoGasolinerasComponent } from './components/listado-gasolineras/listado-gasolineras.component';
 import { provideHttpClient } from '@angular/common/http';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
     AppRoutingModule,
     NgbModule
   ],
-  providers: [provideHttpClient()],
+  providers: [provideHttpClient(), provideAnimationsAsync('noop')],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
