@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListadoGasolinerasComponent } from './components/listado-gasolineras/listado-gasolineras.component';
 import { provideHttpClient } from '@angular/common/http';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent]
