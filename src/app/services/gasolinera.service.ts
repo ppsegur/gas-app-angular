@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GasolineraResponse, ListaEessprecio } from '../interfaces/gasolinera.interface';
+import { GasolineraResponse } from '../interfaces/gasolinera.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,4 +16,5 @@ export class GasolineraService {
       'https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/'
     );
   }
+
 }
