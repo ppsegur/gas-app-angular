@@ -1,41 +1,89 @@
-<!-- listado-gasolineras.compnent.html -->
 <app-nav-bar></app-nav-bar>
 <h1 class="text-center mt-4">Listado de Gasolineras</h1>
-<div class="container mt-4 col-md-3ng">  
-  <button class="btn btn-primary mb-4" (click)="toggleFilter()">Mostrar Filtros</button> 
-  <div *ngIf="showFilter" class="mb-4"> 
-    <label for="priceRange">Filtrar por precio de Gasolina 95 E5:</label> 
-    <input type="range" id="priceRange" min="1" max="2" step="0.01" [(ngModel)]="selectedPrice" ((input))="filterGasolineras()"> 
-    <p>Precio máximo: {{ selectedPrice }} €</p> 
-  </div>
-  <div class="col-md-3 col-12 mb-4">
-<div *ngFor="let gasolinera of filteredGasolineras; let i = index">
-      <div class="card" >
-      <div *ngIf="gasolinera.nombre=='CEPSA'">
-        <img src="../../../assets/cepsa.png" alt="Foto de cepsa">
+
+<div class="container mt-4">
+  <!-- Panel de filtros -->
+  <div class="filtros-panel">
+    <h3 class="filtros-titulo">Filtros de búsqueda</h3>
+    
+    <div class="filtros-grid">
+      <!-- Tipo de Combustible -->
+      <div class="filtro-item">
+        <label for="tipoCombustible">Tipo de Combustible:</label>
+        <select id="tipoCombustible" [(ngModel)]="tipoCombustible">
+          <option value="gasolina">Gasolina</option>
+          <option value="diesel">Diesel</option>
+        </select>
       </div>
-      <div *ngIf="gasolinera.nombre=='REPSOL'">
-        <img src="../../../assets/img/repsol.jpg" alt="Foto de repsol">
+
+      <!-- Precio Mínimo -->
+      <div class="filtro-item">
+        <label for="precioMin">Precio Mínimo:</label>
+        <input type="number" id="precioMin" [(ngModel)]="precioMin" />
       </div>
-      <div *ngIf="gasolinera.nombre=='BP'"; else genericImage>
-        <img src="../../../assets/img/bp.png";alt="Foto de bp">
+
+      <!-- Precio Máximo -->
+      <div class="filtro-item">
+        <label for="precioMax">Precio Máximo:</label>
+        <input type="number" id="precioMax" [(ngModel)]="precioMax" />
       </div>
-      <div *ngIf="gasolinera.nombre=='SHELL'">
-        <img src="../../../assets/img/shell.png" alt="Foto de shell">
+
+      <!-- Código Postal -->
+      <div class="filtro-item">
+        <label for="postalCode">Código Postal:</label>
+        <input type="text" id="postalCode" [(ngModel)]="postalCode" />
       </div>
-      <div *ngIf="gasolinera.nombre=='PETROPRIX'"; else genericImage>
-        <img src="../../../assets/img/petroprix.png" alt="Foto de galp">
-      </div>
-      <ng-template #genericImage>
-         <img src="../../../assets/img/gasolinera.jpg" alt=""> 
-      </ng-template>
-        <div class="card-body">
-          <h5 class="card-title">{{ gasolinera.nombre }} </h5>
-          <p class="card-text"><strong>IDEESS:</strong> {{ gasolinera.id }}</p>
-          <p class="card-text"><strong>Precio Gasolina 95 E5:</strong> {{ gasolinera.priceDiesel }} €</p>
-          <p class="card-text"><strong>Precio Gasoleo A:</strong> {{ gasolinera.price95 }} €</p>
+    </div>
+
+    <!-- Provincias -->
+    <div class="provincias-section">
+      <label>Provincias:</label>
+      <div class="provincias-grid">
+        <div *ngFor="let provincia of provincias" class="provincia-item">
+          <input type="checkbox" [value]="provincia.code" (change)="onProvinciaChange($event)" />
+          <span>{{ provincia.name }}</span>
         </div>
       </div>
     </div>
+
+    <button class="filtrar-btn" (click)="filtrarGasolineras()">Filtrar</button>
   </div>
 
+  <!-- Mensaje sin resultados -->
+  <div *ngIf="noResults" class="no-results">
+    No hay resultados que coincidan con los filtros.
+  </div>
+
+  <!-- Grid de gasolineras -->
+  <div *ngIf="!noResults" class="gasolineras-grid">
+    <div *ngFor="let gasolinera of listadoGasolineras; let i = index" class="card">
+      <ng-container [ngSwitch]="gasolinera.nombre">
+        <div *ngSwitchCase="'CEPSA'">
+          <img src="../../../assets/cepsa.png" alt="Foto de CEPSA">
+        </div>
+        <div *ngSwitchCase="'REPSOL'">
+          <img src="../../../assets/img/repsol.jpg" alt="Foto de REPSOL">
+        </div>
+        <div *ngSwitchCase="'BP'">
+          <img src="../../../assets/img/bp.png" alt="Foto de BP">
+        </div>
+        <div *ngSwitchCase="'SHELL'">
+          <img src="../../../assets/img/shell.png" alt="Foto de SHELL">
+        </div>
+        <div *ngSwitchCase="'PETROPRIX'">
+          <img src="../../../assets/img/petroprix.png" alt="Foto de PETROPRIX">
+        </div>
+        <div *ngSwitchDefault>
+          <img src="../../../assets/img/gasolinera.jpg" alt="">
+        </div>
+      </ng-container>
+      
+      <div class="card-body">
+        <h5 class="card-title">{{ gasolinera.nombre }}</h5>
+        <p class="card-text"><strong>IDEESS:</strong> {{ gasolinera.id }}</p>
+        <p class="card-text"><strong>Precio Diesel:</strong> {{ gasolinera.priceDiesel }} €</p>
+        <p class="card-text"><strong>Precio Gasolina 95:</strong> {{ gasolinera.price95 }} €</p>
+      </div>
+    </div>
+  </div>
+</div>

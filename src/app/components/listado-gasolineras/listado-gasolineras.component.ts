@@ -9,51 +9,80 @@ import { GasolineraService } from '../../services/gasolinera.service';
 })
 export class ListadoGasolinerasComponent implements OnInit {
 
-  listadoGasolineras: Gasolinera[] = [];
-  filteredGasolineras: Gasolinera[] = []; 
-  showFilter: boolean = false;
-  selectedPrice: number = 1.50; // Precio inicial del slider
-
-  constructor(private gasService: GasolineraService) {}
-
-  ngOnInit() {
-    this.gasService.getGasList().subscribe((respuesta) => {
-      const respuestaEnString = JSON.stringify(respuesta);
-      let parsedData;
-      try {
-        parsedData = JSON.parse(respuestaEnString);
-        let arrayGasolineras = parsedData['ListaEESSPrecio'];
-        this.listadoGasolineras = this.cleanProperties(arrayGasolineras);
-        this.filteredGasolineras = [...this.listadoGasolineras]; // Inicializa filteredGasolineras
-      } catch (error) {
-        console.error('Error parsing JSON:', error);
+  
+    listadoGasolineras: Gasolinera[] = [];
+    originalListadoGasolineras: Gasolinera[] = [];
+    tipoCombustible: string = 'gasolina';
+    precioMin: number = 0;
+    precioMax: number = 2;
+    postalCode: string = '';
+    noResults: boolean = false;
+    provincias: { code: string, name: string }[] = [
+      { code: '01', name: 'Araba/Álava' }, { code: '02', name: 'Albacete' }, 
+      // ... add all other provinces here ...
+      { code: '52', name: 'Melilla' }
+    ];
+    selectedProvincias: string[] = [];
+  
+    constructor(private gasService: GasolineraService) {}
+  
+    ngOnInit() {
+      this.loadGasList();
+    }
+  
+    private loadGasList() {
+      this.gasService.getGasList().subscribe((respuesta) => {
+        const respuestaEnString = JSON.stringify(respuesta);
+        let parsedData;
+        try {
+          parsedData = JSON.parse(respuestaEnString);
+          let arrayGasolineras = parsedData['ListaEESSPrecio'];
+          this.originalListadoGasolineras = this.cleanProperties(arrayGasolineras);
+          this.listadoGasolineras = [...this.originalListadoGasolineras];
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+        }
+      });
+    }
+  
+    private cleanProperties(arrayGasolineras: any) {
+      let newArray: Gasolinera[] = [];
+      arrayGasolineras.forEach((gasolineraChusquera: any) => {
+        let gasolinera = new Gasolinera(
+          gasolineraChusquera['IDEESS'],
+          gasolineraChusquera['Rótulo'],
+          parseFloat(gasolineraChusquera['Precio Gasolina 95 E5'].replace(',', '.')),
+          parseFloat(gasolineraChusquera['Precio Gasoleo A'].replace(',', '.')),
+          gasolineraChusquera['C.P.']
+        );
+        newArray.push(gasolinera);
+      });
+      return newArray;
+    }
+  
+    getProvinciaName(postalCode: string): string {
+      const provincia = this.provincias.find(prov => postalCode.startsWith(prov.code));
+      return provincia ? provincia.name : 'Desconocido';
+    }
+  
+    onProvinciaChange(event: any) {
+      const provinciaCode = event.target.value;
+      if (event.target.checked) {
+        this.selectedProvincias.push(provinciaCode);
+      } else {
+        this.selectedProvincias = this.selectedProvincias.filter(code => code !== provinciaCode);
       }
-    });
-  }
-
-  private cleanProperties(arrayGasolineras: any) {
-    let newArray: Gasolinera[] = [];
-    arrayGasolineras.forEach((gasolineraChusquera: any) => {
-      let gasolinera = new Gasolinera(
-        gasolineraChusquera['IDEESS'],
-        gasolineraChusquera['Rótulo'],
-        gasolineraChusquera['Precio Gasolina 95 E5'],
-        gasolineraChusquera['Precio Gasoleo A'],
-        gasolineraChusquera['C.P.']
+    }
+  
+    filtrarGasolineras() {
+      this.listadoGasolineras = this.gasService.filterGasList(
+        this.originalListadoGasolineras,
+        this.tipoCombustible,
+        this.precioMin,
+        this.precioMax,
+        this.postalCode,
+        this.selectedProvincias
       );
-
-      newArray.push(gasolinera);
-    });
-    return newArray;
+      this.noResults = this.listadoGasolineras.length === 0;
+    }
   }
-
-  toggleFilter() {
-    this.showFilter = !this.showFilter;
-  }
-
-  filterGasolineras() {
-    this.filteredGasolineras = this.listadoGasolineras.filter((gasolinera) => {
-      return gasolinera.price95 <= this.selectedPrice;
-    });
-  }
-}
