@@ -4,8 +4,20 @@ export interface GasolineraResponse {
     Nota: string
     ResultadoConsulta: string
 }
+export class Gasolinera {
+    constructor(
+      public id: number,
+      public nombre: string,
+      public price95: number,
+      public priceDiesel: number,
+      public postalCode: string,
+     
+     
+    ) {}
+  }
 
 export interface ListaEessprecio {
+
     "C.P.": string
     Dirección: string
     Horario: string

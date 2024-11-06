@@ -1,17 +1,41 @@
-<div class="container-fluid">
-  <div class="row mt-2 mb-2">
-    <!--for-->
-    @for (item of listadoGasolineras; track item.IDMunicipio) {
-    <div class="col-md-3 col-12 mb-4">
-      <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
+<!-- listado-gasolineras.compnent.html -->
+<app-nav-bar></app-nav-bar>
+<h1 class="text-center mt-4">Listado de Gasolineras</h1>
+<div class="container mt-4 col-md-3ng">  
+  <button class="btn btn-primary mb-4" (click)="toggleFilter()">Mostrar Filtros</button> 
+  <div *ngIf="showFilter" class="mb-4"> 
+    <label for="priceRange">Filtrar por precio de Gasolina 95 E5:</label> 
+    <input type="range" id="priceRange" min="1" max="2" step="0.01" [(ngModel)]="selectedPrice" ((input))="filterGasolineras()"> 
+    <p>Precio máximo: {{ selectedPrice }} €</p> 
+  </div>
+  <div class="col-md-3 col-12 mb-4">
+<div *ngFor="let gasolinera of filteredGasolineras; let i = index">
+      <div class="card" >
+      <div *ngIf="gasolinera.nombre=='CEPSA'">
+        <img src="../../../assets/cepsa.png" alt="Foto de cepsa">
+      </div>
+      <div *ngIf="gasolinera.nombre=='REPSOL'">
+        <img src="../../../assets/img/repsol.jpg" alt="Foto de repsol">
+      </div>
+      <div *ngIf="gasolinera.nombre=='BP'"; else genericImage>
+        <img src="../../../assets/img/bp.png";alt="Foto de bp">
+      </div>
+      <div *ngIf="gasolinera.nombre=='SHELL'">
+        <img src="../../../assets/img/shell.png" alt="Foto de shell">
+      </div>
+      <div *ngIf="gasolinera.nombre=='PETROPRIX'"; else genericImage>
+        <img src="../../../assets/img/petroprix.png" alt="Foto de galp">
+      </div>
+      <ng-template #genericImage>
+         <img src="../../../assets/img/gasolinera.jpg" alt=""> 
+      </ng-template>
         <div class="card-body">
-          <h5 class="card-title">{{item.Horario}}</h5>
-          <p class="card-text">{{item.Provincia}}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">{{ gasolinera.nombre }} </h5>
+          <p class="card-text"><strong>IDEESS:</strong> {{ gasolinera.id }}</p>
+          <p class="card-text"><strong>Precio Gasolina 95 E5:</strong> {{ gasolinera.priceDiesel }} €</p>
+          <p class="card-text"><strong>Precio Gasoleo A:</strong> {{ gasolinera.price95 }} €</p>
         </div>
       </div>
     </div>
-    }
   </div>
-</div>
+
