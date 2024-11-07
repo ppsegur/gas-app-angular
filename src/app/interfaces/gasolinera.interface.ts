@@ -1,3 +1,14 @@
+export interface Municipio {
+  codigo_postal: string,
+  municipio_id: string,
+  municipio_nombre: string
+
+}
+
+export interface MunicipioResponse {
+    results: Municipio[]
+}
+
 export interface GasolineraResponse {
     Fecha: string
     results: ListaEessprecio[]
@@ -5,19 +16,12 @@ export interface GasolineraResponse {
     ResultadoConsulta: string
 }
 export class Gasolinera {
-
-   
     constructor(
       public id: number,
       public nombre: string,
       public price95: number,
       public priceDiesel: number,
       public postalCode: string,
-      public rotulo: string,
-      public latitud: string,
-      public longitud: string,   
-      public comunidad: string,
-      public provincia: string
      
      
     ) {}
