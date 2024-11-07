@@ -1,89 +1,89 @@
+
 <app-nav-bar></app-nav-bar>
-<h1 class="text-center mt-4">Listado de Gasolineras</h1>
+<button class="icono-filtro" (click)="toggleFiltros()">
+  <i class="bi bi-list" style="color: white;"></i>
+</button>
 
-<div class="container mt-4">
-  <!-- Panel de filtros -->
-  <div class="filtros-panel">
-    <h3 class="filtros-titulo">Filtros de búsqueda</h3>
-    
-    <div class="filtros-grid">
-      <!-- Tipo de Combustible -->
-      <div class="filtro-item">
-        <label for="tipoCombustible">Tipo de Combustible:</label>
-        <select id="tipoCombustible" [(ngModel)]="tipoCombustible">
-          <option value="gasolina">Gasolina</option>
-          <option value="diesel">Diesel</option>
-        </select>
-      </div>
+@if(mostrarFiltros){
+<div class="filtros">
+<label for="tipoCombustible">Tipo de Combustible:</label>
+<select id="tipoCombustible" [(ngModel)]="tipoCombustible">
+  <option value="gasolina">Gasolina</option>
+  <option value="diesel">Diesel</option>
+</select>
 
-      <!-- Precio Mínimo -->
-      <div class="filtro-item">
-        <label for="precioMin">Precio Mínimo:</label>
-        <input type="number" id="precioMin" [(ngModel)]="precioMin" />
-      </div>
+<label for="precioMin">Precio Mínimo:</label>
+<input type="number" id="precioMin" [(ngModel)]="precioMin" />
 
-      <!-- Precio Máximo -->
-      <div class="filtro-item">
-        <label for="precioMax">Precio Máximo:</label>
-        <input type="number" id="precioMax" [(ngModel)]="precioMax" />
-      </div>
+<label for="precioMax">Precio Máximo:</label>
+<input type="number" id="precioMax" [(ngModel)]="precioMax" />
+<!--
+<mat-form-field class="example-full-width">
+  <mat-label>Código Postal</mat-label>
+  <input matInput
+         type="text"
+         placeholder="Pick one"
+         aria-label="Código Postal"
+         [formControl]="postalCodeControl"
+         [matAutocomplete]="auto">
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredPostalCodes | async" [value]="option">{{option}}</mat-option>
+  </mat-autocomplete>
+</mat-form-field>-->
+   
 
-      <!-- Código Postal -->
-      <div class="filtro-item">
-        <label for="postalCode">Código Postal:</label>
-        <input type="text" id="postalCode" [(ngModel)]="postalCode" />
-      </div>
-    </div>
-
-    <!-- Provincias -->
-    <div class="provincias-section">
-      <label>Provincias:</label>
-      <div class="provincias-grid">
-        <div *ngFor="let provincia of provincias" class="provincia-item">
-          <input type="checkbox" [value]="provincia.code" (change)="onProvinciaChange($event)" />
-          <span>{{ provincia.name }}</span>
-        </div>
-      </div>
-    </div>
-
-    <button class="filtrar-btn" (click)="filtrarGasolineras()">Filtrar</button>
-  </div>
-
-  <!-- Mensaje sin resultados -->
-  <div *ngIf="noResults" class="no-results">
-    No hay resultados que coincidan con los filtros.
-  </div>
-
-  <!-- Grid de gasolineras -->
-  <div *ngIf="!noResults" class="gasolineras-grid">
-    <div *ngFor="let gasolinera of listadoGasolineras; let i = index" class="card">
-      <ng-container [ngSwitch]="gasolinera.nombre">
-        <div *ngSwitchCase="'CEPSA'">
-          <img src="../../../assets/cepsa.png" alt="Foto de CEPSA">
-        </div>
-        <div *ngSwitchCase="'REPSOL'">
-          <img src="../../../assets/img/repsol.jpg" alt="Foto de REPSOL">
-        </div>
-        <div *ngSwitchCase="'BP'">
-          <img src="../../../assets/img/bp.png" alt="Foto de BP">
-        </div>
-        <div *ngSwitchCase="'SHELL'">
-          <img src="../../../assets/img/shell.png" alt="Foto de SHELL">
-        </div>
-        <div *ngSwitchCase="'PETROPRIX'">
-          <img src="../../../assets/img/petroprix.png" alt="Foto de PETROPRIX">
-        </div>
-        <div *ngSwitchDefault>
-          <img src="../../../assets/img/gasolinera.jpg" alt="">
-        </div>
-      </ng-container>
-      
-      <div class="card-body">
-        <h5 class="card-title">{{ gasolinera.nombre }}</h5>
-        <p class="card-text"><strong>IDEESS:</strong> {{ gasolinera.id }}</p>
-        <p class="card-text"><strong>Precio Diesel:</strong> {{ gasolinera.priceDiesel }} €</p>
-        <p class="card-text"><strong>Precio Gasolina 95:</strong> {{ gasolinera.price95 }} €</p>
-      </div>
-    </div>
-  </div>
+<div class="checkboxes">
+  <label><input type="checkbox" value="REPSOL" (change)="onRotuloChange($event)" /> REPSOL</label>
+  <label><input type="checkbox" value="CEPSA" (change)="onRotuloChange($event)" /> CEPSA</label>
+  <label><input type="checkbox" value="CARREFOUR" (change)="onRotuloChange($event)" /> CARREFOUR</label>
+  <label><input type="checkbox" value="TAMOS" (change)="onRotuloChange($event)" /> TAMOS</label>
+  <label><input type="checkbox" value="FAMILY ENERGY" (change)="onRotuloChange($event)" /> FAMILY ENERGY</label>
+  <label><input type="checkbox" value="INPEALSA" (change)="onRotuloChange($event)" /> INPEALSA</label>
+  <label><input type="checkbox" value="PETROCAMP" (change)="onRotuloChange($event)" /> PETROCAMP</label>
+  <label><input type="checkbox" value="ALCAMPO" (change)="onRotuloChange($event)" /> ALCAMPO</label>
 </div>
+<label for="comunidad">Comunidad Autónoma:</label>
+<select id="comunidad" [(ngModel)]="selectedComunidad" (change)="onComunidadChange()">
+  <option value="">Todas</option>
+  <option *ngFor="let comunidad of comunidadesAutonomas" [value]="comunidad.IDCCAA">
+    {{ comunidad.CCAA }}
+  </option>
+</select>
+
+<label for="provincia">Provincia:</label>
+<select id="provincia" [(ngModel)]="selectedProvincia" [disabled]="!selectedComunidad">
+  <option value="">Seleccione Provincia</option>
+  <option *ngFor="let provincia of provincias" [value]="provincia.IDPovincia">
+    {{ provincia.nombre }}
+  </option>
+</select>
+
+<button (click)="filtrarGasolineras()">Filtrar</button>
+</div>
+}
+
+@if(noResults){
+<div>
+<p>No hay resultados que coincidan con los filtros.</p>
+</div>
+}
+
+@if(!noResults){
+<section class="resultados">
+<h3>Resultados de la búsqueda:</h3>
+<div class="grid">
+  @for(gasolinera of listadoGasolineras; track gasolinera.id){
+  <div class="card">
+    <h4>Estación: {{ gasolinera.nombre }}</h4>
+    <p><strong>IDEESS:</strong> {{ gasolinera.id }}</p>
+    <p><strong>Código Postal:</strong> {{ gasolinera.postalCode }}</p>
+    <p><strong>Precio Gasolina 95:</strong> {{ gasolinera.price95 }}</p>
+    <p><strong>Precio Diesel:</strong> {{ gasolinera.priceDiesel }}</p>
+    <p><strong>Rótulo:</strong> {{ gasolinera.rotulo }}</p>
+    <a [href]="gasolinera | googleMapsRoutePipe" target="_blank" class="btn btn-primary"
+      style="background-color: #2e7af3; border-color: #6306af;">Cómo llegar</a>
+  </div>
+  }
+</div>
+</section>
+}
