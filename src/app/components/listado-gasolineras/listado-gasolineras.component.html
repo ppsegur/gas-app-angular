@@ -47,33 +47,7 @@
     </div>
 
     <!-- Filtrar gasolineras por provincia haciendo un listado desplegable dinámicamente consultando el db.json -->
-    <div class="filtro-item">
-      <label for="provincia">Provincia:</label>
-      <select id="provincia">
-        <option value="">Selecciona una provincia</option>
-        <option *ngFor="let muncipio of filtrarGasolinerasPorProvincia()" [value]="listadoMunicipios.indexOf">{{ muncipio.municipio_nombre }}</option>
-      </select>
-
-
-
-
-    <!--<form class="example-form">
-      <mat-form-field class="example-full-width">
-        <mat-label>Number</mat-label>
-        <input type="text"
-               placeholder="Pick one"
-               aria-label="Number"
-               matInput
-               [formControl]="myControl"
-               [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete">
-          @for (option of filteredOptions | async; track option) {
-            <mat-option [value]="option">{{option}}</mat-option>
-          }
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>-->
-    
+     <autocomplete-filter-example></autocomplete-filter-example>
 
     <button class="filtrar-btn" (click)="filtrarGasolineras()">Filtrar</button>
   </div>
@@ -84,7 +58,7 @@
   </div>
 
   <!-- Grid de gasolineras -->
-  <div *ngIf="!noResults" class="gasolineras-grid">
+  <!--<div *ngIf="!noResults" class="gasolineras-grid">
     <div *ngFor="let gasolinera of listadoGasolineras; let i = index" class="card">
       <ng-container [ngSwitch]="gasolinera.nombre">
         <div *ngSwitchCase="'CEPSA'">
@@ -114,5 +88,5 @@
         <p class="card-text"><strong>Precio Gasolina 95:</strong> {{ gasolinera.price95 }} €</p>
       </div>
     </div>
-  </div>
+  </div>-->
 </div>

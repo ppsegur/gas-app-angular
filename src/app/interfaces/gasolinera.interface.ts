@@ -1,4 +1,4 @@
-export interface Municipio {
+/*export interface Municipio {
   codigo_postal: string,
   municipio_id: string,
   municipio_nombre: string
@@ -7,7 +7,7 @@ export interface Municipio {
 
 export interface MunicipioResponse {
     results: Municipio[]
-}
+}*/
 
 export interface GasolineraResponse {
     Fecha: string

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Gasolinera, Municipio, MunicipioResponse } from '../interfaces/gasolinera.interface';
+import { Gasolinera} from '../interfaces/gasolinera.interface';
 import { FormControl } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
 
@@ -39,10 +39,6 @@ export class GasolineraService {
         matchesProvincia
       );
     });
-  }
-
-  filterGasListByProvincia() {
-    return this.http.get<MunicipioResponse>('http://localhost:3000/gas-poblation-list');
   }
 
 }

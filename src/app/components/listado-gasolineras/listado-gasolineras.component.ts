@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Gasolinera, ListaEessprecio, Municipio } from '../../interfaces/gasolinera.interface';
+import { Gasolinera, ListaEessprecio } from '../../interfaces/gasolinera.interface';
 import { GasolineraService } from '../../services/gasolinera.service';
+import { MunicipioService } from '../../services/municipio.service';
+import { Municipio } from '../../interfaces/municipio.interface';
+import { AutocompleteFilterExample } from "../autocomplete/autocomplete.component";
 
 @Component({
   selector: 'app-listado-gasolineras',
   templateUrl: './listado-gasolineras.component.html',
-  styleUrl: './listado-gasolineras.component.css'
+  styleUrl: './listado-gasolineras.component.css',
+  //standalone: true,
+  // imports: [AutocompleteFilterExample]
 })
 export class ListadoGasolinerasComponent implements OnInit {
 
@@ -24,7 +29,8 @@ export class ListadoGasolinerasComponent implements OnInit {
     ];
     selectedProvincias: string[] = [];
   
-    constructor(private gasService: GasolineraService) {}
+    constructor(private gasService: GasolineraService,
+      private municipioService: MunicipioService) {}
   
     ngOnInit() {
       this.loadGasList();
@@ -87,12 +93,11 @@ export class ListadoGasolinerasComponent implements OnInit {
     }
 
     filtrarGasolinerasPorProvincia(): Municipio[] {
-      /*this.gasService.filterGasListByProvincia().subscribe((respuesta) => {
-        this.listadoMunicipios = respuesta.results;*/
-
-        return this.listadoMunicipios = this.listadoMunicipios.filter((municipio) => {
-          return this.selectedProvincias.includes(municipio.municipio_nombre);
-        });
-      //});
+      this.municipioService.filterGasListByProvincia().subscribe((respuesta) => {
+        this.listadoMunicipios = respuesta.results;
+        /*return this.listadoMunicipios = this.listadoMunicipios.filter((municipio) => {
+          return this.selectedProvincias.includes(municipio.municipio_nombre);*/
+      });
+      return this.listadoMunicipios;
     }
   }
