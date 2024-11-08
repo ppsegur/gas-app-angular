@@ -19,8 +19,8 @@ import { AutocompleteFilterExample } from './components/autocomplete/autocomplet
   declarations: [
     AppComponent,
     NavBarComponent,
-    ListadoGasolinerasComponent,
-    AutocompleteFilterExample
+    // ListadoGasolinerasComponent,
+    // AutocompleteFilterExample
   ],
   imports: [
     BrowserModule,
@@ -31,7 +31,9 @@ import { AutocompleteFilterExample } from './components/autocomplete/autocomplet
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    ListadoGasolinerasComponent,
     AsyncPipe,
+    AutocompleteFilterExample,
     //ListadoGasolinerasComponent,
     //AutocompleteFilterExample
   ],
