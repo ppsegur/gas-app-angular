@@ -9,8 +9,8 @@ import { AutocompleteFilterExample } from "../autocomplete/autocomplete.componen
   selector: 'app-listado-gasolineras',
   templateUrl: './listado-gasolineras.component.html',
   styleUrl: './listado-gasolineras.component.css',
-  //standalone: true,
-  // imports: [AutocompleteFilterExample]
+  standalone: true,
+  imports: [AutocompleteFilterExample]
 })
 export class ListadoGasolinerasComponent implements OnInit {
 

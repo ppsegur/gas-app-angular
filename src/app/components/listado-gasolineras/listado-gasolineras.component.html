@@ -47,7 +47,7 @@
     </div>
 
     <!-- Filtrar gasolineras por provincia haciendo un listado desplegable dinámicamente consultando el db.json -->
-     <autocomplete-filter-example></autocomplete-filter-example>
+     <app-autocomplete></app-autocomplete>
 
     <button class="filtrar-btn" (click)="filtrarGasolineras()">Filtrar</button>
   </div>
@@ -58,7 +58,7 @@
   </div>
 
   <!-- Grid de gasolineras -->
-  <!--<div *ngIf="!noResults" class="gasolineras-grid">
+  <div *ngIf="!noResults" class="gasolineras-grid">
     <div *ngFor="let gasolinera of listadoGasolineras; let i = index" class="card">
       <ng-container [ngSwitch]="gasolinera.nombre">
         <div *ngSwitchCase="'CEPSA'">
@@ -88,5 +88,5 @@
         <p class="card-text"><strong>Precio Gasolina 95:</strong> {{ gasolinera.price95 }} €</p>
       </div>
     </div>
-  </div>-->
+  </div>
 </div>

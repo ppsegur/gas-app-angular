@@ -7,12 +7,12 @@ import { ListadoGasolinerasComponent } from './components/listado-gasolineras/li
 import { provideHttpClient } from '@angular/common/http';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { AutocompleteFilterExample } from './components/autocomplete/autocomplete.component';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AsyncPipe } from '@angular/common';
+import { AutocompleteFilterExample } from './components/autocomplete/autocomplete.component';
 
 
 @NgModule({
@@ -31,9 +31,11 @@ import { AsyncPipe } from '@angular/common';
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    AsyncPipe
+    AsyncPipe,
+    //ListadoGasolinerasComponent,
+    //AutocompleteFilterExample
   ],
-  providers: [provideHttpClient(), provideAnimationsAsync()],
+  providers: [provideHttpClient(), provideAnimations()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
