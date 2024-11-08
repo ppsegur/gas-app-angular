@@ -51,7 +51,7 @@
       <label for="provincia">Provincia:</label>
       <select id="provincia">
         <option value="">Selecciona una provincia</option>
-        <option *ngFor="let provincia of filtrarGasolinerasPorProvincia()" [value]="provincia.code">{{ provincia.name }}</option>
+        <option *ngFor="let muncipio of filtrarGasolinerasPorProvincia()" [value]="listadoMunicipios.indexOf">{{ muncipio.municipio_nombre }}</option>
       </select>
 
 

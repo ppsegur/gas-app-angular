@@ -86,9 +86,13 @@ export class ListadoGasolinerasComponent implements OnInit {
       this.noResults = this.listadoGasolineras.length === 0;
     }
 
-    filtrarGasolinerasPorProvincia(): void {
-      this.gasService.filterGasListByProvincia().subscribe((respuesta) => {
-        this.listadoMunicipios = respuesta.results;
-      });
+    filtrarGasolinerasPorProvincia(): Municipio[] {
+      /*this.gasService.filterGasListByProvincia().subscribe((respuesta) => {
+        this.listadoMunicipios = respuesta.results;*/
+
+        return this.listadoMunicipios = this.listadoMunicipios.filter((municipio) => {
+          return this.selectedProvincias.includes(municipio.municipio_nombre);
+        });
+      //});
     }
   }
