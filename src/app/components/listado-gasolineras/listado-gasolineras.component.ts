@@ -9,8 +9,8 @@ import { AutocompleteFilterExample } from "../autocomplete/autocomplete.componen
   selector: 'app-listado-gasolineras',
   templateUrl: './listado-gasolineras.component.html',
   styleUrl: './listado-gasolineras.component.css',
-  standalone: true,
-  imports: [AutocompleteFilterExample]
+  //standalone: true,
+  //imports: [AutocompleteFilterExample]
 })
 export class ListadoGasolinerasComponent implements OnInit {
 
@@ -92,12 +92,11 @@ export class ListadoGasolinerasComponent implements OnInit {
       this.noResults = this.listadoGasolineras.length === 0;
     }
 
-    filtrarGasolinerasPorProvincia(): Municipio[] {
+    filtrarGasolinerasPorProvincia(): void {
       this.municipioService.filterGasListByProvincia().subscribe((respuesta) => {
-        this.listadoMunicipios = respuesta.results;
-        /*return this.listadoMunicipios = this.listadoMunicipios.filter((municipio) => {
-          return this.selectedProvincias.includes(municipio.municipio_nombre);*/
+        this.listadoMunicipios = respuesta.results.filter((municipio) => {
+          return this.selectedProvincias.includes(municipio.municipio_nombre);
+        });
       });
-      return this.listadoMunicipios;
     }
-  }
+}

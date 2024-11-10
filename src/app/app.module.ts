@@ -19,23 +19,21 @@ import { AutocompleteFilterExample } from './components/autocomplete/autocomplet
   declarations: [
     AppComponent,
     NavBarComponent,
-    // ListadoGasolinerasComponent,
-    // AutocompleteFilterExample
+    ListadoGasolinerasComponent,
+    AutocompleteFilterExample
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    ListadoGasolinerasComponent,
     AsyncPipe,
-    AutocompleteFilterExample,
-    //ListadoGasolinerasComponent,
-    //AutocompleteFilterExample
+    //AutocompleteFilterExample,
+    //ListadoGasolinerasComponent
   ],
   providers: [provideHttpClient(), provideAnimations()],
   bootstrap: [AppComponent]

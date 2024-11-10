@@ -1,59 +1,39 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {AsyncPipe} from '@angular/common';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { Municipio, MunicipioResponse } from '../../interfaces/municipio.interface';
 import { MunicipioService } from '../../services/municipio.service';
 
-/**
- * @title Filter autocomplete
- */
 @Component({
   selector: 'app-autocomplete',
   templateUrl: 'autocomplete.component.html',
-  styleUrl: 'autocomplete.component.css',
-  standalone: true,
-  imports: [
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    AsyncPipe,
-  ],
+  styleUrls: ['autocomplete.component.css']
 })
 export class AutocompleteFilterExample implements OnInit {
 
-  constructor(private municipioService: MunicipioService) { }
-
   myControl = new FormControl('');
   options: Municipio[] = [];
-  filteredOptions!: Observable<MunicipioResponse>;
+  filteredOptions: Observable<Municipio[]> = of([]);
+
+  constructor(private municipioService: MunicipioService) { }
 
   ngOnInit() {
-    this.filteredOptions = this.filtrarGasolinerasPorProvincia();
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => ({ results: this._filter(value || '') })),
-    );
+    this.filtrarGasolinerasPorProvincia().subscribe(respuesta => {
+      this.options = respuesta.results || [];
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value || ''))
+      );
+    });
   }
 
   private _filter(value: string): Municipio[] {
     const filterValue = value.toLowerCase();
-
     return this.options.filter(option => option.municipio_nombre.toLowerCase().includes(filterValue));
   }
 
   filtrarGasolinerasPorProvincia(): Observable<MunicipioResponse> {
-    return this.municipioService.filterGasListByProvincia().pipe(
-      map((respuesta) => {
-        this.options = respuesta.results;
-        return respuesta;
-      })
-    );
+    return this.municipioService.filterGasListByProvincia();
   }
 }

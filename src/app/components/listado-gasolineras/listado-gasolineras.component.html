@@ -9,8 +9,8 @@
     <div class="filtros-grid">
       <!-- Tipo de Combustible -->
       <div class="filtro-item">
-        <label for="tipoCombustible">Tipo de Combustible:</label>
-        <select id="tipoCombustible" [(ngModel)]="tipoCombustible">
+        <label for="tipo-combustible">Tipo de Combustible:</label>
+        <select id="tipo-combustible" [(ngModel)]="tipoCombustible">
           <option value="gasolina">Gasolina</option>
           <option value="diesel">Diesel</option>
         </select>
@@ -18,19 +18,19 @@
 
       <!-- Precio Mínimo -->
       <div class="filtro-item">
-        <label for="precioMin">Precio Mínimo:</label>
-        <input type="number" id="precioMin" [(ngModel)]="precioMin" />
+        <label for="precio-min">Precio Mínimo:</label>
+        <input type="number" id="precio-min" [(ngModel)]="precioMin" />
       </div>
 
       <!-- Precio Máximo -->
       <div class="filtro-item">
-        <label for="precioMax">Precio Máximo:</label>
-        <input type="number" id="precioMax" [(ngModel)]="precioMax" />
+        <label for="precio-max">Precio Máximo:</label>
+        <input type="number" id="precio-maximo" [(ngModel)]="precioMax" />
       </div>
 
       <!-- Código Postal -->
       <div class="filtro-item">
-        <label for="postalCode">Código Postal:</label>
+        <label for="postal-code">Código Postal:</label>
         <input type="text" id="postalCode" [(ngModel)]="postalCode" />
       </div>
     </div>
@@ -47,7 +47,7 @@
     </div>
 
     <!-- Filtrar gasolineras por provincia haciendo un listado desplegable dinámicamente consultando el db.json -->
-     <app-autocomplete></app-autocomplete>
+    <app-autocomplete></app-autocomplete>
 
     <button class="filtrar-btn" (click)="filtrarGasolineras()">Filtrar</button>
   </div>
